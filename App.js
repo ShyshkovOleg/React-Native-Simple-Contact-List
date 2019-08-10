@@ -1,28 +1,14 @@
-/**
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   ScrollView,
   View,
-  Text,
-  StatusBar,
-  FlatList,
-  Button
+  Dimensions
 } from 'react-native';
+import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 import ContactCard from './components/ContactCard';
+import FancyButton from './components/FancyButton';
 
 export default class App extends Component {
 
@@ -30,17 +16,27 @@ export default class App extends Component {
     super();
     this.state = {
       items: [
-        {name: 1},
-        {name: 2},
-        {name: 3},
-        {name: 4},
-        {name: 5},
-        {name: 6},
-        {name: 7},
-        {name: 8},
-        {name: 9},
-      ]
+        {id: 0, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
+        {id: 1, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
+        {id: 2, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
+        {id: 3, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
+        {id: 4, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
+        {id: 5, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
+        {id: 6, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
+        {id: 7, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
+        {id: 8, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
+        {id: 9, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"}
+      ],
+      isPortrait: true,
+      screenWidt: Dimensions.get('window').width
     }
+  }
+
+  componentDidMount() {
+    Dimensions.addEventListener('change', ({window: {width, height}}) => {
+      width < height ? this.setState({isPortrait: true}) : this.setState({isPortrait: false});
+      // alert(Dimensions.get('window').width)
+    })
   }
 
   addItem = () => {
@@ -54,24 +50,22 @@ export default class App extends Component {
     let index;
     return (
       <View style={styles.container}>
+        <ScrollView>
 
-        <View style={styles.contacts}>
-          {this.state.items.map(el => {
-              return (
-                <ContactCard key={el.name} item={el} />
-              )
-            })
-          }
-        </View>
+          <View style={styles.contacts}>
+            {this.state.items.map(el => {
+                return (
+                  <ContactCard key={el.id} item={el} isPortrait={this.state.isPortrait} screenWidth={Dimensions.get('window').width}/>
+                )
+              })
+            }
+          </View>
 
+        </ScrollView>
         <View style={styles.button}>
-          <Button
-            title="ADD"
-            onPress={this.addItem}
-            color="#841584"
-          />
+            {/* <Button title="ADD" onPress={this.addItem} color="#841584"/> */}
+            <FancyButton onPress={() => console.log("Pressed Add")} title={'ADD CONTACT'} disabled={false}/>
         </View>
-
       </View>
     );
   }
@@ -84,20 +78,26 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    paddingTop: 20,
-    backgroundColor: Colors.lighter,    
+    padding: 5,
+    backgroundColor: Colors.lighter,
+    alignItems: 'stretch',
   },
   contacts: {
     flex: 9,
     flexWrap: 'wrap',
     flexDirection: 'row',
-    justifyContent: 'space-around', // determine last items positions
+    // justifyContent: 'space-around', // determine last items positions
+    justifyContent: 'center',
+    // alignItems: 'stretch',
+    margin: 5
   },
   button: {
-    alignItems: 'stretch',
-    flex: 1,
+    // alignItems: 'stretch',
+    // flex: 2,
     justifyContent: 'flex-end',
-    margin: 10
+    margin: 5,
+    height: 60,
+    // backgroundColor: '#272734'
   },
   // list: {
   //   flex: 9,

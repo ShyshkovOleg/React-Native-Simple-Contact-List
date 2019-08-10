@@ -1,37 +1,81 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
+let screenWidth;
+
 const ContactCard = (props) => {
+    dynamicStyle = () => {
+        if (props.isPortrait) {
+            return {
+                backgroundColor: Colors.dark,
+                borderRadius: 5,
+                height: 100,
+                width: '100%',
+                flexDirection: 'row',
+                margin: 5,
+            };
+        } else {
+            return {
+                backgroundColor: Colors.dark,
+                borderRadius: 5,
+                height: 100,
+                width: props.screenWidth / 2 - 20,
+                flexDirection: 'row',
+                margin: 5,
+            };
+        }
+    }
     return (
-        <TouchableOpacity style={styles.card}>
-            <View style={{flexDirection: 'column', justifyContent: 'space-around', flex: 1, margin: 5}}>
-                <Text style={styles.text}>ID:  {props.item.name}</Text>
-                <Text style={styles.text}>ID:  {props.item.name}</Text>
-                <Text style={styles.text}>ID:  {props.item.name}</Text>
+        // <TouchableOpacity style={props.isPortrait ? styles.cardP : styles.cardL}>
+        <TouchableOpacity style={this.dynamicStyle()}>
+
+            <View style={{flexDirection: 'column', flex: 2, margin: 5}}>
+                <Text style={styles.bigText}>{props.item.firstName + ' ' +  props.item.lastName}</Text>
+                <Text style={styles.smallText}>{props.item.cell}</Text>
+                <Text style={styles.smallText}>{props.item.email}</Text>
             </View >
 
-            {/* <View style={{width: 50, height: 50}}> */}
-                <Image style={{resizeMode: 'stretch', width: '10%'}} source={require('../images/man.png')} style={styles.btnImage}/>
-            {/* </View> */}
+            <View style={{flex: 1, justifyContent: "center", backgroundColor: "#67B826"}}>
+                
+                {
+                    props.item.id %2 === 0 ?
+                    <Image style={{resizeMode: 'center', width: '100%'}} source={require('../images/man.png')}/> :
+                    <Image style={{resizeMode: 'center', width: '100%'}} source={require('../images/girl.png')}/>
+                }
+                
+            </View>
         </TouchableOpacity>
     )
 }
 
 const styles = StyleSheet.create({
-    card: {
+    cardP: {
         backgroundColor: Colors.dark,
-        borderRadius: 10,
+        // backgroundColor: "#88D840",
+        borderRadius: 5,
         height: 100,
-        width: 100,
+        width: '100%',
         flexDirection: 'row',
-        margin: 10,
-        alignItems: 'stretch',
-        // borderColor: 'red',
-        // borderWidth: 5
+        margin: 5,
     },
-    text: {
+    cardL: {
+        backgroundColor: Colors.dark,
+        // backgroundColor: "#88D840",
+        borderRadius: 5,
+        height: 100,
+        // width: Dimensions.get('window').width / 1.8,
+        width: screenWidth,
+        flexDirection: 'row',
+        margin: 5,
+    },
+    smallText: {
         color: '#ffffff',
+    },
+    bigText: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontSize: 20
     }
 });
 
