@@ -32,7 +32,8 @@ export default class App extends Component {
       screenWidth: Dimensions.get('window').width,
       isRearranged: false,
       modalVisible: false,
-      itemData: {}
+      itemData: {},
+      isNewContact: false
     }
   }
 
@@ -40,20 +41,13 @@ export default class App extends Component {
     Dimensions.addEventListener('change', ({window: {width, height}}) => {
       width < height ? this.setState({isPortrait: true}) : this.setState({isPortrait: false});
       this.setState({screenWidth: Dimensions.get('window').width})
-      // alert(Dimensions.get('window').width)
     })
   }
 
   addItem = () => {
-    // this.state.items.push({name: new Date().getTime()});
     this.setState({
       items: [...this.state.items, {id: new Date().getTime(), firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"}],
     });
-    // this.setModalVisible(true);
-
-    // setTimeout(() => {
-    //   this.setState({modalVisible: false})
-    // }, 3000);
   }
 
   rearrangeLayout = () => {
@@ -64,9 +58,8 @@ export default class App extends Component {
     }
   }
 
-  setModalVisible = (visible, itemData) => {
-    this.setState({modalVisible: visible, itemData: itemData});
-    // alert(JSON.stringify(data))
+  setModalVisible = (visible, itemData, isNew) => {
+    this.setState({modalVisible: visible, itemData: itemData, isNewContact: isNew});
   }
 
   render () {
@@ -81,6 +74,7 @@ export default class App extends Component {
           animationType="fade" 
           isPortrait={this.state.isPortrait}
           itemData={this.state.itemData}
+          isNewContact={this.state.isNewContact}
         />
         
         <View style={{height: 55, marginTop: -5, backgroundColor: '#67B826', justifyContent: "space-between", alignItems: 'center', flexDirection: 'row'}}>
@@ -91,8 +85,8 @@ export default class App extends Component {
         </View>
 
         <View style={styles.container}>
-          <ScrollView>
 
+          <ScrollView>
             <View style={styles.contacts}>
               {this.state.items.map(el => {
                   return (
@@ -106,10 +100,10 @@ export default class App extends Component {
                 })
               }
             </View>
-
           </ScrollView>
+
           <View style={styles.button}>
-              <FancyButton onPress={this.addItem} title={'ADD CONTACT'} disabled={false}/>
+              <FancyButton toggleModal={this.setModalVisible} title={'ADD CONTACT'} disabled={false}/>
           </View>
         </View>
       </View>
@@ -141,5 +135,3 @@ const styles = StyleSheet.create({
     height: 60,
   },
 });
-
-// export default App;

@@ -29,7 +29,7 @@ const ContactCard = (props) => {
     }
     return (
         // <TouchableOpacity style={props.isPortrait ? styles.cardP : styles.cardL}>
-        <TouchableOpacity style={this.dynamicStyle()} onPress={() => props.toggleModal(true, props.item)}>
+        <TouchableOpacity style={this.dynamicStyle()} onPress={() => props.toggleModal(true, props.item, false)}>
 
             <View style={{flexDirection: 'column', flex: 2, margin: 5}}>
                 <Text style={styles.bigText}>{props.item.firstName + ' ' +  props.item.lastName}</Text>
