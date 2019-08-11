@@ -11,7 +11,8 @@ const ContactCard = (props) => {
                 backgroundColor: Colors.dark,
                 borderRadius: 5,
                 height: 100,
-                width: '100%',
+                // width: '100%',
+                width: props.screenWidth - 20,
                 flexDirection: 'row',
                 margin: 5,
             };
@@ -28,7 +29,7 @@ const ContactCard = (props) => {
     }
     return (
         // <TouchableOpacity style={props.isPortrait ? styles.cardP : styles.cardL}>
-        <TouchableOpacity style={this.dynamicStyle()}>
+        <TouchableOpacity style={this.dynamicStyle()} onPress={() => props.toggleModal(true, props.item)}>
 
             <View style={{flexDirection: 'column', flex: 2, margin: 5}}>
                 <Text style={styles.bigText}>{props.item.firstName + ' ' +  props.item.lastName}</Text>
@@ -36,15 +37,19 @@ const ContactCard = (props) => {
                 <Text style={styles.smallText}>{props.item.email}</Text>
             </View >
 
-            <View style={{flex: 1, justifyContent: "center", backgroundColor: "#67B826"}}>
+            {
+                props.isRearranged ?
+                <View></View> :
+                <View style={{flex: 1, justifyContent: "center", backgroundColor: "#67B826"}}>
                 
-                {
-                    props.item.id %2 === 0 ?
-                    <Image style={{resizeMode: 'center', width: '100%'}} source={require('../images/man.png')}/> :
-                    <Image style={{resizeMode: 'center', width: '100%'}} source={require('../images/girl.png')}/>
-                }
+                    {
+                        props.item.id %2 === 0 ?
+                        <Image style={{resizeMode: 'center', width: '100%'}} source={require('../images/man.png')}/> :
+                        <Image style={{resizeMode: 'center', width: '100%'}} source={require('../images/girl.png')}/>
+                    }
                 
-            </View>
+                </View>
+            }
         </TouchableOpacity>
     )
 }
