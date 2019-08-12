@@ -2,8 +2,8 @@
 Simple Contact List with basic responsive layout.
 ===================================
 
-This sample demonstrates how to work with a WearableListenerService,
-to produce and consume DataEvents and effectively work with the DataLayer.
+The basic functionality of adding new contact to a list of existing. 
+Data persist to local storage. Layout could be rearranged at Portrait mode.
 
 Live demo
 ------------
