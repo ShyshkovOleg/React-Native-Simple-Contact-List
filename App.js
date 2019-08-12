@@ -22,13 +22,7 @@ export default class App extends Component {
   constructor() {
     super();
     this.state = {
-      items: [
-        // {id: 0, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
-        // {id: 1, firstName: 'Вікторія', lastName: 'Шишкова', cell: 'немає', email: "немає"},
-        // {id: 2, firstName: 'Andrii', lastName: 'Shyshkov', cell: '+380978458000', email: "andrii@gmail.com"},
-        // {id: 3, firstName: 'Надія', lastName: 'Шишкова', cell: '+380679087261', email: "nadia@gmail.com"},
-        // {id: 4, firstName: 'Тетяна', lastName: 'Шишкова', cell: '+380977460988', email: "shyshkova.t.v@icloud.com"}
-      ],
+      items: [],
       isPortrait: true,
       screenWidth: Dimensions.get('window').width,
       isRearranged: false,
@@ -36,7 +30,6 @@ export default class App extends Component {
       itemData: {},
       isNewContact: false
     }
-    // this.getFromLocal();
   }
 
   getFromLocal = async () => {
@@ -44,7 +37,6 @@ export default class App extends Component {
         const value = await AsyncStorage.getItem('contacts');
         const arr = JSON.parse(value)
         this.setState({items: arr})
-        // console.log(this.state.items);
     } catch (e) {
         console.info(e);
     }
@@ -54,7 +46,6 @@ export default class App extends Component {
   saveToLocal = async (data) => {
       try {
           await AsyncStorage.setItem('contacts', JSON.stringify(data));
-          // await AsyncStorage.setItem('contacts', JSON.stringify([]));
       } catch (error) {
           console.info(error);
       }
@@ -69,11 +60,6 @@ export default class App extends Component {
       this.setState({screenWidth: Dimensions.get('window').width})
     })
   }
-
-  // shouldComponentUpdate(props, state) {
-  //   console.log("shoud update");
-  //   return true;
-  // }
 
   addItem = () => {
     this.setState({
@@ -91,9 +77,6 @@ export default class App extends Component {
 
   setModalVisible = (visible, itemData, isNew) => {
     this.setState({modalVisible: visible, itemData: itemData, isNewContact: isNew});
-    // setTimeout(() => {
-    //   this.setState({modalVisible: false});
-    // }, 3000);
   }
 
   saveInput = (val) => {
@@ -103,7 +86,6 @@ export default class App extends Component {
   }
 
   render () {
-    let index;
     return (
       <View style={{flexDirection: 'column', flex: 1}}>
         <StatusBar hidden />
@@ -118,8 +100,8 @@ export default class App extends Component {
           inputData={this.saveInput}
         />
         
-        <View style={{height: 55, marginTop: -5, backgroundColor: '#67B826', justifyContent: "space-between", alignItems: 'center', flexDirection: 'row'}}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 22, marginLeft: 10,}}>Contact List</Text>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Contact List</Text>
           <TouchableOpacity onPress={this.rearrangeLayout}>
             <Image style={{resizeMode: 'center', height: '100%', marginRight: 10}} source={require('./images/menu.png')}/>
           </TouchableOpacity>
@@ -144,7 +126,6 @@ export default class App extends Component {
           </ScrollView>
 
           <View style={styles.button}>
-              {/* <FancyButton toggleModal={this.setModalVisible} title={'ADD CONTACT'} disabled={false}/> */}
               <FancyButton onPress={()=> this.setModalVisible(true, {}, true)} title={'ADD CONTACT'} disabled={false}/>
           </View>
         </View>
@@ -156,6 +137,20 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   scrollView: {
     backgroundColor: Colors.lighter,
+  },
+  header: {
+    height: 55,
+    marginTop: -5,
+    backgroundColor: '#67B826',
+    justifyContent: "space-between",
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  headerText: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 22,
+    marginLeft: 10
   },
   container: {
     flex: 1,

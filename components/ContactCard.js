@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 let screenWidth;
@@ -11,7 +11,6 @@ const ContactCard = (props) => {
                 backgroundColor: Colors.dark,
                 borderRadius: 5,
                 height: 100,
-                // width: '100%',
                 width: props.screenWidth - 20,
                 flexDirection: 'row',
                 margin: 5,
@@ -28,7 +27,6 @@ const ContactCard = (props) => {
         }
     }
     return (
-        // <TouchableOpacity style={props.isPortrait ? styles.cardP : styles.cardL}>
         <TouchableOpacity style={this.dynamicStyle()} onPress={() => props.toggleModal(true, props.item, false)}>
 
             <View style={{flexDirection: 'column', flex: 2, margin: 5}}>
@@ -55,25 +53,6 @@ const ContactCard = (props) => {
 }
 
 const styles = StyleSheet.create({
-    cardP: {
-        backgroundColor: Colors.dark,
-        // backgroundColor: "#88D840",
-        borderRadius: 5,
-        height: 100,
-        width: '100%',
-        flexDirection: 'row',
-        margin: 5,
-    },
-    cardL: {
-        backgroundColor: Colors.dark,
-        // backgroundColor: "#88D840",
-        borderRadius: 5,
-        height: 100,
-        // width: Dimensions.get('window').width / 1.8,
-        width: screenWidth,
-        flexDirection: 'row',
-        margin: 5,
-    },
     smallText: {
         color: '#ffffff',
     },

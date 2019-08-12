@@ -33,7 +33,7 @@ export default class CustomModal extends Component {
             <View style={styles.wrapper}>
               <View style={dynamicStyle()}>
                 
-                <TouchableOpacity style={{alignItems: 'flex-end', justifyContent: 'center', height: 50}} onPress={() => {toggleModal(false, {})}}>
+                <TouchableOpacity style={styles.closebtn} onPress={() => {toggleModal(false, {})}}>
                     <Image style={{height: 20, width: 20, marginRight: 15}} source={require('../images/close.png')}/>
                 </TouchableOpacity>
                 
@@ -41,7 +41,7 @@ export default class CustomModal extends Component {
 
                   {isNewContact ? <InputForm inputData={inputData} closeModal={toggleModal}/> : <ContactDetails itemData={itemData}/>}
 
-                  <View style={{flex: 1, justifyContent: "flex-end", alignItems: 'center', width: '100%'}}>
+                  <View style={styles.userPhoto}>
                     <Image style={{resizeMode: 'center', height: 100, width: 100, borderRadius: 100}} source={require('../images/placeholder.png')}/>
                   </View>
                 </View>
@@ -81,4 +81,15 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lighter,
     borderRadius: 5,
   },
+  closebtn : {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    height: 50
+  },
+  userPhoto: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: 'center',
+    width: '100%'
+  }
 });

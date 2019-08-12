@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Touchable, TouchableHighlight, Image, TouchableWithoutFeedback } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 export default class FancyButton extends Component {
     constructor() {
@@ -9,13 +8,6 @@ export default class FancyButton extends Component {
             pressStatus: false 
         };
     }
-
-    // _onHideUnderlay(){
-    //     this.setState({ pressStatus: false });
-    // }
-    // _onShowUnderlay(){
-    //     this.setState({ pressStatus: true });
-    // }
 
     render() {
         const {
@@ -26,24 +18,10 @@ export default class FancyButton extends Component {
         } = this.props;
     
         return (
-            // <TouchableHighlight disabled={disabled} onPress={onPress} title={title}
-            //     style={this.state.pressStatus ? styles.buttonPressed : styles.button}
-            //     onHideUnderlay={this._onHideUnderlay.bind(this)}
-            //     onShowUnderlay={this._onShowUnderlay.bind(this)}
-            //     // underlayColor={'#88D840'}
-            //     underlayColor={'red'}
-            // >
-            //     <Text style={{color: 'white'}} disabled={disabled}>
-            //         {title}
-            //     </Text>
-            // </TouchableHighlight>
             <TouchableWithoutFeedback disabled={disabled} title={title} 
                 onPressIn={() => this.setState({ pressStatus: true })}
                 onPressOut={() => this.setState({ pressStatus: false })}
                 onPress={onPress}
-                // style={this.state.pressStatus ? styles.buttonPressed : styles.button}
-                // underlayColor={'#88D840'}
-                // underlayColor={'red'}
             >
                 <View style={this.state.pressStatus ? styles.buttonPressed : styles.button}>
                     <Text style={{color: 'white'}} disabled={disabled}>{title}</Text>
