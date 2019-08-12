@@ -9,10 +9,10 @@ Live demo
 ------------
 
 To playaround you could install directly on you Android device:
-- paste link to !!!Chrome: https://i.diawi.com/eiofHr ;
-- follow the instractions;
+- paste link to !!!Chrome: https://i.diawi.com/eiofHr
+- follow the instractions
 
--Things to improve in future:
+Things to improve in future
 --------------
 
 - form validation
@@ -21,4 +21,4 @@ To playaround you could install directly on you Android device:
 Platforms
 ---------------
 
-Tested only on Android.
+Tested only on Android
