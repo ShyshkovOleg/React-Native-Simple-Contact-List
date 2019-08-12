@@ -35,8 +35,10 @@ export default class App extends Component {
   getFromLocal = async () => {
     try {
         const value = await AsyncStorage.getItem('contacts');
-        const arr = JSON.parse(value)
-        this.setState({items: arr})
+        const arr = JSON.parse(value);
+        if(arr !== null) {
+          this.setState({items: arr})
+        }
     } catch (e) {
         console.info(e);
     }
@@ -52,7 +54,6 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    console.log("did mount");
     this.getFromLocal();
 
     Dimensions.addEventListener('change', ({window: {width, height}}) => {
