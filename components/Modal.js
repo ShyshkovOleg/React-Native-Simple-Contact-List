@@ -15,10 +15,24 @@ export default class CustomModal extends Component {
 
     render() {
         const { animationType, modalVisible, toggleModal, isPortrait, itemData, isNewContact } = this.props;
+
+        dynamicStyle = () => {
+          switch (true) {
+            case isPortrait && !isNewContact:
+              return styles.modalContainer;
+            case !isPortrait && !isNewContact:
+              return styles.modalContainerLanscape;
+            case isPortrait && isNewContact:
+              return styles.modalContainerLanscape;
+            case !isPortrait && isNewContact:
+              return styles.modalContainerLanscapeNewContact;
+          }
+        }
         return (
         <Modal animationType={animationType} transparent visible={modalVisible}>
             <View style={styles.wrapper}>
-              <View style={isPortrait ? styles.modalContainer : styles.modalContainerLanscape}>
+              {/* <View style={isPortrait ? styles.modalContainer : styles.modalContainerLanscape}> */}
+              <View style={dynamicStyle()}>
                 
                 <TouchableOpacity style={{alignItems: 'flex-end', justifyContent: 'center', height: 50}} onPress={() => {toggleModal(false, {})}}>
                     <Image style={{height: 20, width: 20, marginRight: 15}} source={require('../images/close.png')}/>
@@ -59,6 +73,12 @@ const styles = StyleSheet.create({
   modalContainerLanscape: {
     width: '90%',
     height: '50%',
+    backgroundColor: Colors.lighter,
+    borderRadius: 5,
+  },
+  modalContainerLanscapeNewContact: {
+    width: '90%',
+    height: '80%',
     backgroundColor: Colors.lighter,
     borderRadius: 5,
   },

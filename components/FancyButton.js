@@ -19,14 +19,15 @@ export default class FancyButton extends Component {
 
     render() {
         const {
-            // onPress,
+            onPress,
             title,
             disabled,
             toggleModal
         } = this.props;
     
         return (
-            <TouchableHighlight disabled={disabled} onPress={() => toggleModal(true, {}, true)} title={title}
+            // <TouchableHighlight disabled={disabled} onPress={() => toggleModal(true, {}, true)} title={title}
+            <TouchableHighlight disabled={disabled} onPress={onPress} title={title}
                 style={this.state.pressStatus ? styles.buttonPressed : styles.button}
                 onHideUnderlay={this._onHideUnderlay.bind(this)}
                 onShowUnderlay={this._onShowUnderlay.bind(this)}

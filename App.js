@@ -60,6 +60,9 @@ export default class App extends Component {
 
   setModalVisible = (visible, itemData, isNew) => {
     this.setState({modalVisible: visible, itemData: itemData, isNewContact: isNew});
+    // setTimeout(() => {
+    //   this.setState({modalVisible: false});
+    // }, 3000);
   }
 
   render () {
@@ -103,7 +106,8 @@ export default class App extends Component {
           </ScrollView>
 
           <View style={styles.button}>
-              <FancyButton toggleModal={this.setModalVisible} title={'ADD CONTACT'} disabled={false}/>
+              {/* <FancyButton toggleModal={this.setModalVisible} title={'ADD CONTACT'} disabled={false}/> */}
+              <FancyButton onPress={()=> this.setModalVisible(true, {}, true)} title={'ADD CONTACT'} disabled={false}/>
           </View>
         </View>
       </View>
