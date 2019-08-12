@@ -14,7 +14,7 @@ import InputForm from "../components/InputForm";
 export default class CustomModal extends Component {
 
     render() {
-        const { animationType, modalVisible, toggleModal, isPortrait, itemData, isNewContact } = this.props;
+        const { animationType, modalVisible, toggleModal, isPortrait, itemData, inputData, isNewContact } = this.props;
 
         dynamicStyle = () => {
           switch (true) {
@@ -31,7 +31,6 @@ export default class CustomModal extends Component {
         return (
         <Modal animationType={animationType} transparent visible={modalVisible}>
             <View style={styles.wrapper}>
-              {/* <View style={isPortrait ? styles.modalContainer : styles.modalContainerLanscape}> */}
               <View style={dynamicStyle()}>
                 
                 <TouchableOpacity style={{alignItems: 'flex-end', justifyContent: 'center', height: 50}} onPress={() => {toggleModal(false, {})}}>
@@ -40,7 +39,7 @@ export default class CustomModal extends Component {
                 
                 <View style={{flexDirection: 'column'}}>
 
-                  {isNewContact ? <InputForm /> : <ContactDetails itemData={itemData}/>}
+                  {isNewContact ? <InputForm inputData={inputData} closeModal={toggleModal}/> : <ContactDetails itemData={itemData}/>}
 
                   <View style={{flex: 1, justifyContent: "flex-end", alignItems: 'center', width: '100%'}}>
                     <Image style={{resizeMode: 'center', height: 100, width: 100, borderRadius: 100}} source={require('../images/placeholder.png')}/>

@@ -11,6 +11,7 @@ import {
 } from 'react-native';
   
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import ContactCard from './components/ContactCard';
 import FancyButton from './components/FancyButton';
@@ -22,11 +23,11 @@ export default class App extends Component {
     super();
     this.state = {
       items: [
-        {id: 0, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
-        {id: 1, firstName: 'Вікторія', lastName: 'Шишкова', cell: 'немає', email: "немає"},
-        {id: 2, firstName: 'Andrii', lastName: 'Shyshkov', cell: '+380978458000', email: "andrii@gmail.com"},
-        {id: 3, firstName: 'Надія', lastName: 'Шишкова', cell: '+380679087261', email: "nadia@gmail.com"},
-        {id: 4, firstName: 'Тетяна', lastName: 'Шишкова', cell: '+380977460988', email: "shyshkova.t.v@icloud.com"}
+        // {id: 0, firstName: 'Oleg', lastName: 'Shyshkov', cell: '+38098816004', email: "shyshkov.o.a@gmail.com"},
+        // {id: 1, firstName: 'Вікторія', lastName: 'Шишкова', cell: 'немає', email: "немає"},
+        // {id: 2, firstName: 'Andrii', lastName: 'Shyshkov', cell: '+380978458000', email: "andrii@gmail.com"},
+        // {id: 3, firstName: 'Надія', lastName: 'Шишкова', cell: '+380679087261', email: "nadia@gmail.com"},
+        // {id: 4, firstName: 'Тетяна', lastName: 'Шишкова', cell: '+380977460988', email: "shyshkova.t.v@icloud.com"}
       ],
       isPortrait: true,
       screenWidth: Dimensions.get('window').width,
@@ -35,14 +36,44 @@ export default class App extends Component {
       itemData: {},
       isNewContact: false
     }
+    // this.getFromLocal();
+  }
+
+  getFromLocal = async () => {
+    try {
+        const value = await AsyncStorage.getItem('contacts');
+        const arr = JSON.parse(value)
+        this.setState({items: arr})
+        // console.log(this.state.items);
+    } catch (e) {
+        console.info(e);
+    }
+  }
+
+  
+  saveToLocal = async (data) => {
+      try {
+          await AsyncStorage.setItem('contacts', JSON.stringify(data));
+          // await AsyncStorage.setItem('contacts', JSON.stringify([]));
+      } catch (error) {
+          console.info(error);
+      }
   }
 
   componentDidMount() {
+    console.log("did mount");
+    this.getFromLocal();
+
     Dimensions.addEventListener('change', ({window: {width, height}}) => {
       width < height ? this.setState({isPortrait: true}) : this.setState({isPortrait: false});
       this.setState({screenWidth: Dimensions.get('window').width})
     })
   }
+
+  // shouldComponentUpdate(props, state) {
+  //   console.log("shoud update");
+  //   return true;
+  // }
 
   addItem = () => {
     this.setState({
@@ -65,6 +96,12 @@ export default class App extends Component {
     // }, 3000);
   }
 
+  saveInput = (val) => {
+    console.log(val);
+    this.setState({items: [...this.state.items, val]});
+    this.saveToLocal([...this.state.items, val]);
+  }
+
   render () {
     let index;
     return (
@@ -78,6 +115,7 @@ export default class App extends Component {
           isPortrait={this.state.isPortrait}
           itemData={this.state.itemData}
           isNewContact={this.state.isNewContact}
+          inputData={this.saveInput}
         />
         
         <View style={{height: 55, marginTop: -5, backgroundColor: '#67B826', justifyContent: "space-between", alignItems: 'center', flexDirection: 'row'}}>

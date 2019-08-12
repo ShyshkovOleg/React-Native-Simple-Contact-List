@@ -1,14 +1,11 @@
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
-import AsyncStorage from '@react-native-community/async-storage';
+import { View, StyleSheet, TextInput } from 'react-native';
 
 import FancyButton from './FancyButton';
 
 export default class InputForm extends Component {
     state = {
-        // formValid: true,
-        id: '',
+        id:  new Date().getTime(),
         firstName: "ім'я",
         lastName: 'прізвище',
         cell: 'телефон',
@@ -16,18 +13,10 @@ export default class InputForm extends Component {
     };
 
     render() {
-        saveToLocal = () => {
-            (async () => {
-                try {
-                  await AsyncStorage.setItem('contacts', JSON.stringify(this.state));
-                } catch (error) {
-                  // Error saving data
-                }
-            })();
-            AsyncStorage.getAllKeys((res) => alert(res));
-        }
+        const { inputData, closeModal } = this.props;
+
         return (
-            <View style={{flexDirecrtion: 'column',alignItems: 'center', flex: 1, marginTop: 15}}>
+            <View style={styles.container}>
 
                 <TextInput
                     style={styles.input} 
@@ -63,8 +52,13 @@ export default class InputForm extends Component {
                 />
                 {/* <Text style={{fontSize: 12,  transform: [{translateY: -25}]}}>пошта</Text> */}
                 
-                <View style={{width: '95%', marginTop: 15}}>
-                    <FancyButton title={'SAVE'} disabled={false} onPress={()=> saveToLocal()}/>
+                <View style={styles.inputButton}>
+                    <FancyButton title={'SAVE'} disabled={false} 
+                    onPress={()=> {
+                        closeModal(false, {}, true);
+                        inputData(this.state);
+                    }}
+                    />
                 </View>
 
             </View>
@@ -73,17 +67,25 @@ export default class InputForm extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        flex: 1,
+        marginTop: 15
+    },
     input: {
         width: '95%',
         color: '#272734',
         height: 40,
-        // borderColor: 'gray',
-        // borderWidth: 1,
         borderBottomColor: 'gray',
         borderBottomWidth: 1,
         marginTop: 5
-        // marginTop: -10
+    },
+    inputButton: {
+        width: '95%',
+        marginTop: 60,
+        justifyContent: 'flex-end',
+        flexDirection: 'column',
     }
 });
 
-// export default InputForm;
